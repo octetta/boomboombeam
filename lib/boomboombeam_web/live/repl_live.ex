@@ -27,6 +27,8 @@ defmodule BoomBoomBeamWeb.ReplLive do
     |> assign(:active_engine, AudioEngine.engine())
     |> assign(:theme, :light)
     |> assign(:wave_buffer, "")
+    |> assign(:udp_ip, "127.0.0.1")
+    |> assign(:udp_port, "60440")
     
     {:ok, socket}
   end
@@ -130,6 +132,17 @@ defmodule BoomBoomBeamWeb.ReplLive do
     end
     AudioEngine.set_engine(engine)
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("set_udp_target", %{"ip" => ip, "port" => port_str}, socket) do
+    case Integer.parse(port_str) do
+      {port, ""} ->
+        BoomBoomBeam.AudioEngine.Udp.set_target(ip, port)
+        {:noreply, assign(socket, udp_ip: ip, udp_port: port_str)}
+      _ ->
+        {:noreply, socket}
+    end
   end
 
 
@@ -330,6 +343,15 @@ defmodule BoomBoomBeamWeb.ReplLive do
                   </select>
                 </form>
               </div>
+
+              <%= if @active_engine == BoomBoomBeam.AudioEngine.Udp do %>
+                <form phx-change="set_udp_target" class="flex items-center space-x-2 m-0 border-r border-slate-300 dark:border-white/10 pr-4">
+                  <span class="text-xs font-mono text-slate-500 dark:text-gray-400 uppercase tracking-wider">UDP Target:</span>
+                  <input type="text" name="ip" value={@udp_ip} class="w-28 bg-white dark:bg-black/40 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5" placeholder="127.0.0.1" />
+                  <span class="text-slate-500 dark:text-gray-400">:</span>
+                  <input type="text" name="port" value={@udp_port} class="w-20 bg-white dark:bg-black/40 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5" placeholder="60440" />
+                </form>
+              <% end %>
 
               <button phx-click="toggle_theme" class="px-3 py-2 text-lg bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 border border-slate-300 dark:border-white/10 rounded-lg transition-all duration-300">
                 <%= if @theme == :dark do %>☀️<% else %>🌙<% end %>

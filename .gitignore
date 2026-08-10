@@ -44,12 +44,14 @@ npm-debug.log
 /assets/node_modules/
 
 # Zig build outputs
-/native/skred_port/zig-cache/
-/native/skred_port/zig-out/
+/native/**/.zig-cache/
+/native/**/zig-out/
 
 # App compiled native binaries
 skred_port
+skred_udp
 skred_port.exe
+skred_udp.exe
 test_skred
 *.o
 /priv/bin/

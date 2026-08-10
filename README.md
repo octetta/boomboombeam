@@ -1,74 +1,64 @@
 # BoomBoomBeam
 
-BoomBoomBeam is a desktop audio workstation interface built with Elixir, Phoenix LiveView, and a native Zig backend engine (`skred`).
+BoomBoomBeam is a technical showcase demonstrating how to integrate the [Pulp/Skred](https://github.com/octetta/pulp) audio engine with the BEAM ecosystem. While it features a Phoenix LiveView-based interface for interacting with the engine, it is **not a full audio workstation**—it is simply a reference architecture designed to highlight the incredible flexibility of running native C/Zig audio code alongside Elixir.
 
 ## Prerequisites
 
-To develop or build this project, you need:
+To develop or build this project locally, you need:
 1. **Elixir & Erlang/OTP** (v1.17+) - For the frontend web application.
-2. **Zig** (v0.13.0+) - To compile the native `skred` audio engine.
+2. **Zig** (v0.13.0+) - To compile the native `skred` audio engine targets.
+3. **mise** (Optional but recommended) - Used in our Makefile for managing toolchains.
 
 ## The Three Execution Engines
 
-BoomBoomBeam is designed as a "kitchen-sink" reference architecture to show off how the BEAM can integrate with native audio code (`skred`) in three entirely different topologies:
+BoomBoomBeam acts as a "kitchen-sink" integration demo, allowing you to hot-swap between three entirely different audio topologies at runtime directly from the UI dropdown:
 
 1. **Local Port (Elixir Managed)**
-   The backend spawns the `skred` binary as a child OS process using Erlang Ports. The Erlang VM manages its lifecycle and streams commands via `stdio`. This has minimal latency and zero-config deployment.
+   The backend spawns the `skred_port` Zig binary as a child OS process using Erlang Ports. The Erlang VM manages its lifecycle and streams commands via `stdin/stdout`. This offers minimal latency, zero-config deployment, and supports high-bandwidth data dumps (like waveforms).
    
-2. **Browser WASM (Client-Side)**
-   Using WebAssembly, the entire audio engine runs locally inside the user's web browser using the Web Audio API. Elixir acts strictly as a WebSocket control plane, pushing commands to the client. This offloads all audio compute from the server.
+2. **Remote UDP (Distributed)**
+   Elixir sends stateful commands over `:gen_udp` to a standalone headless `skred_udp` server running anywhere on your network. This demonstrates how to separate the web server control plane from heavy-compute audio nodes (e.g. running the UI on a cloud server and the audio engine on a Raspberry Pi).
    
-3. **Remote UDP (Distributed)**
-   Elixir sends stateful commands over `:gen_udp` to a standalone `skred` server running anywhere on the network. This allows separating the web server from the heavy-compute audio nodes.
+3. **Browser WASM (Client-Side)**
+   Using WebAssembly, the entire audio engine runs locally inside the user's web browser using the Web Audio API. Elixir acts strictly as a WebSocket control plane, pushing commands to the client. This offloads all audio compute from the server, showcasing infinite multi-tenant scalability.
 
-You can hot-swap between these three engines at runtime using the dropdown in the UI!
+## Running the Showcase
 
-## Running in Development
+The project uses a simple `Makefile` to handle downloads and compilation.
 
-In development, the Elixir backend will look for the `skred_port` binary in your local root directory. 
-
-Before building the audio engine, you must download the pre-compiled `pulp` C library (which contains the core signal processing algorithms) for your platform:
+### 1. Download Dependencies
+Before building the native engines, you must download the pre-compiled `pulp` C library (which contains the core signal processing algorithms) and the WebAssembly blobs:
 ```bash
-./download-pulp.sh
+make update
 ```
-This script will also download the WebAssembly (`skred.wasm`) binaries and place them into `/priv/static/assets/skred/` so the frontend can serve them.
 
-### Method 1: Local Port Engine
-1. **Build the Audio Engine**:
-   ```bash
-   cd native/skred_port
-   zig build -Doptimize=ReleaseFast
-   cp zig-out/bin/skred_port ../../
-   cd ../../
-   ```
+### 2. Build the Audio Engines
+Compile both the standard Erlang Port engine and the headless UDP server:
+```bash
+make native
+make udp
+```
 
-2. **Start the Web Application**:
-   ```bash
-   mix setup
-   mix phx.server
-   ```
-   Now visit [`localhost:4000`](http://localhost:4000) from your browser and select **Local Port**!
+### 3. Start the Web Application
+Compile the Elixir application and boot the Phoenix server:
+```bash
+make build
+make run
+```
+Now visit [`localhost:4000`](http://localhost:4000) from your browser!
 
-### Method 2: Browser WASM Engine
-Simply run `mix phx.server` and select **Browser WASM** from the UI. The Elixir backend will route commands to your browser over WebSockets and play audio client-side. No native Zig compilation required!
-
-### Method 3: Remote UDP Engine
-1. Start the standalone `mini-skred` UDP server (which was downloaded by the `download-pulp.sh` script):
-   ```bash
-   ./run-mini-skred.sh
-   ```
-2. Run `mix phx.server` in a separate terminal.
-3. Select **Remote UDP** from the UI dropdown!
-
-
-*Note: Since LiveReload requires `inotify-tools` on Linux, you may need to manually refresh (F5) the browser when making UI changes if it's missing on your system.*
+### Running the Remote UDP Engine
+If you want to test the UDP architecture, open a second terminal and boot the headless standalone server:
+```bash
+./priv/bin/linux/skred_udp
+```
+Then, switch the UI to **Remote UDP**. You can optionally configure the target IP and Port dynamically from the top bar.
 
 ## Building Desktop Standalone Distributions
 
 BoomBoomBeam uses [Burrito](https://github.com/burrito-elixir/burrito) to package the entire system (Erlang VM, Phoenix App, and the Zig audio engine) into a single, cross-platform standalone executable that can be zipped and distributed without users needing to install dependencies.
 
 To build the binaries for Windows, macOS, and Linux, simply run:
-
 ```bash
 ./build_releases.sh
 ```
