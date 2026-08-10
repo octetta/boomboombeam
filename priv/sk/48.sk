@@ -1,0 +1,58 @@
+# teeny tiny soy fish
+/w206,306 # fish -> v0
+/w221,307 # soy -> v3
+/w223,308 # teeny -> v4
+/w228,309 # tiny -> v5
+/w300,350 # put-it -> v20
+/w301,351 # fish-in -> v21
+v0 w306 f292.364 a6.1157 J1891 K8000 Q82.6446 c1,0.3851 q5 h3 P1,1 r1 # fish
+v1 w0 f8 a1.8182 m1 # pan mod fish
+v2 w0 f2.9091 a0.1653 m1
+v3 w307 f358.546 a8.6777 h9 r1 # soy
+v4 w308 f336 a10 r1 # teeny
+v5 w309 f512.727 a2.7273 c1,0.5678 q5 h9 r1 # tiny
+v10 w200 f605.818 a2.562 c1,0.2744 q12 h4 r1 # perc-shk
+v11 w201 f282.182 a9.5041 c1,0.6066 r1 # perc-bass
+v12 w202 f850.909 a5.2893 r1 # perc-snare
+v15 m1 w1 f110 G8 a8 J2 K126.604 Q5.5372 c1,0.5273 q10 F17,1 P16,1 r1 # synth
+v8 m1 w1 N.2 a8 r1
+v16 w0 f1.0661 a1 m1 # synth pan mod
+v17 w0 f3.4711 a1 m1 # synth freq mod
+v18 w0 f1 a1 m1 # synth cz mod
+v20 w350 f391.995 a5 p0.75 m1 r1 # put-it
+v21 w351 f440 a5 p-0.75 m1 r1 # fish-in
+# v30 w0 f50 a5.6 m1
+# v31 w350 f440 a100
+
+# patterns
+M120
+y0 %4
+[v3T] x0
+[v0T] x1
+[v4T] x2
+[v5T] x3
+y1 %4
+[v10T+.25v10T+.25v10T] x0
+y2 %4
+[v11T+.75v11T] x0
+[v12T] x1
+y3 %16
+[v21T+1.75v21T] x0
+[#] x1
+y4 %16
+[#] x0
+[v20T+.45v20T] x1
+y5 %4
+[v15n50] x0
+[v15n45] x1
+[v15n45] x2
+[v15n44+.5v15n42+.25v15n51] x3
+y6 %4
+[v15a0+.0625v15a8] x0
+
+# perform
+
+
+# +1 Z1 v0m0 +2 v3m0 +2 v4m0 +2 v5m0 +9 v15a0 v15m0 # intro
+# +1 v0m1 v3m1 v4m1 v5a200 +1 v20m0 +4 v21m0 # main
+# +1 v20m1 +4 v0m1 +1 v21m1 +1 v3m1 +2 v15m1 +3 v4m1 +4 v5m1 +5 Z0 # outro

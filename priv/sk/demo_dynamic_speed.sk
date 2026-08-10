@@ -1,0 +1,72 @@
+# 2026.sk: Dynamic Speed Shifts (z%) & Live Downbeat Pattern Queueing (zq1)
+# -------------------------------------------------------------------------
+# This example demonstrates:
+#   1. Dynamic Step Clock Modulo (z%1 = 16th notes, z%2 = 8th notes half-speed)
+#   2. Downbeat Pattern Queueing (zq1 = queue next pattern to enter on beat 1)
+# -------------------------------------------------------------------------
+M 120
+
+# 1. Load bundled Ksynth drum patches into sample slots:
+[sk/drums-kick.ks]/ks 1 k>d d>r /r100
+[sk/drums-snare.ks]/ks 1 k>d d>r /r101
+[sk/drums-chh.ks]/ks 1 k>d d>r /r102
+[sk/drums-tomhi.ks]/ks 1 k>d d>r /r103
+
+# 2. Voice Assignments (using f440 natural sample root frequency):
+v0 w100 f440 a10          # Kick
+v1 w101 f440 a8           # Snare
+v2 w102 f440 a6           # Closed Hi-Hat
+v3 w103 f440 a8           # High Tom
+
+# -------------------------------------------------------------------------
+# PATTERN 0: Main Groove with a Half-Speed Breakdown on Beat 3 (z%2)
+# -------------------------------------------------------------------------
+y0
+[v0l1 v2l0.8 z%1] x0      # Beat 1: Kick + Hat (Standard 16th-note clock z%1)
+[v2l0.4] x1               # Offbeat Hat
+[v2l0.6] x2               # Hat
+[v2l0.4] x3               # Offbeat Hat
+[v1l1 v2l0.8] x4          # Beat 2: Snare Accent + Hat
+[v2l0.4] x5               # Offbeat Hat
+[v0l0.8 v2l0.6] x6        # Ghost Kick + Hat
+[v2l0.4] x7               # Offbeat Hat
+
+# Beat 3: Switch to Half-Speed 8th Notes (z%2) for a Breakdown Effect!
+[v0l1 v1l0.8 z%2] x8      # Heavy Kick + Snare Slam (Step lasts 2 master ticks!)
+[v3l0.8] x9               # High Tom Drop (Half-speed step)
+
+# Beat 4: Return to Standard 16th Notes (z%1) for the Turnaround Fill!
+[v0l1 v2l0.8 z%1] x10     # Kick + Hat
+[v2l0.4] x11              # Offbeat Hat
+[v1l0.8] x12              # Snare
+[v3l0.7] x13              # Tom Accent
+[v1l0.9 z*4] x14          # 32nd-Note Snare Ratchet Burst!
+[v3l1.0] x15              # High Tom Crash into Beat 1
+
+# -------------------------------------------------------------------------
+# PATTERN 1: High-Energy Double-Time Driving Groove
+# -------------------------------------------------------------------------
+y1
+[v0l1 v2l0.9 z%1] x0      # Beat 1: Punchy Kick
+[v2l0.5] x1               # Hat
+[v0l0.8 v2l0.6] x2        # Driving Kick
+[v2l0.5] x3               # Hat
+[v1l1.0 v2l0.9] x4        # Beat 2: Snare Crack
+[v2l0.5] x5               # Hat
+[v0l0.8 v2l0.6] x6        # Driving Kick
+[v2l0.5] x7               # Hat
+[v0l1 v2l0.9] x8          # Beat 3: Kick
+[v2l0.5] x9               # Hat
+[v0l0.8 v2l0.6] x10       # Driving Kick
+[v2l0.5] x11              # Hat
+[v1l1.0 v2l0.9] x12       # Beat 4: Snare Crack
+[v2l0.5] x13              # Hat
+[v3l0.8] x14              # Tom
+[v1l0.9 z*4] x15          # Snare Ratchet Fill
+
+# -------------------------------------------------------------------------
+# EXECUTION:
+# Start Pattern 0 now, and queue Pattern 1 to take over on the downbeat!
+# -------------------------------------------------------------------------
+y0 z1                     # Start Pattern 0 running
+y1 zq1                    # Queue Pattern 1 to start seamlessly on the downbeat!

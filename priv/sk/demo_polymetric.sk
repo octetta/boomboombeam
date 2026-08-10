@@ -1,0 +1,42 @@
+# 2024.sk: Polymetric Drum Fills with Cross-Pattern Wait Step (-0)
+# ------------------------------------------------------------------
+M 124
+
+# Load bundled Ksynth drum & bass patches:
+[sk/drums-kick.ks]/ks 1 k>d d>r /r100
+[sk/drums-snare.ks]/ks 1 k>d d>r /r101
+[sk/drums-chh.ks]/ks 1 k>d d>r /r102
+[sk/nap-bass-acid.ks]/ks 1 k>d d>r /r103
+
+# Voice Assignments (Drums at natural unpitched f440):
+v0 w100 f440 a10          # Kick (Natural unpitched playback)
+v1 w101 f440 a8           # Snare
+v2 w102 f440 a3           # Closed Hat
+v3 w103 f440 a8           # Acid Bass (Pitched via note numbers)
+
+# Master 16-Step Groove (Pattern 0)
+y0
+[v0l1 v3n36l1] x0
+[v2l0.4] x1
+[v2l0.4] x2
+[v3n48l0.5] x3
+[v0l1 v1l1] x4
+[v2l0.4] x5
+[v3n41l0.5] x6
+[v2l0.4] x7
+[v0l1 v3n36l1] x8
+[v2l0.4] x9
+[v0l0.8 v3n43l0.5] x10
+[v2l0.4] x11
+[v0l1 v1l1] x12
+[v2l0.4] x13
+[v3n39l0.5] x14
+[v2l0.4] x15
+
+# 3-Step Polymetric Fill ending with -0 (Pattern 1)
+y1
+[v1l1] x0
+[v1l0.75] x1
+x2 -0
+
+Z1

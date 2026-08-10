@@ -1,0 +1,44 @@
+# 2029.sk: Iconic Amen Break Chop & Sub Bass 16-Step Groove
+# -------------------------------------------------------------
+M 165
+
+# Wave Slots:
+# 100: Kick
+# 101: Snare (Crisp Amen Snare)
+# 102: Closed Hi-Hat
+# 103: Open Hi-Hat
+# 104: Sub Bass
+[sk/drums-kick.ks]/ks 1 k>d d>r /r100
+[sk/drums-snare.ks]/ks 1 k>d d>r /r101
+[sk/drums-chh.ks]/ks 1 k>d d>r /r102
+[sk/drums-ohh.ks]/ks 1 k>d d>r /r103
+[sk/gm-bass-sub.ks]/ks 1 k>d d>r /r104
+
+# Voice Assignments:
+v0 w100 f440 a10          # Kick (Natural unpitched playback)
+v1 w101 f440 a8           # Snare
+v2 w102 f440 a3           # Closed Hat
+v3 w103 f440 a5           # Open Hat
+v4 w104 f440 a10          # Sub Bass (Pitched via note numbers)
+
+# 16-Step Pattern (Full 4/4 Bar @ 165 BPM)
+y0
+[v0l1 v4n24l1] x0         # Beat 1 Amen Kick + Sub Bass
+[v2l0.4] x1
+[v1l0.25] x2              # Soft Ghost Snare
+[v2l0.4] x3
+[v1l1] x4                 # Beat 2 Snare Backbeat
+[v2l0.4] x5
+[v0l0.8 v4n24l1] x6       # Syncopated Amen Kick
+[v1l0.25] x7              # Ghost Snare
+[v0l1] x8                 # Beat 3 Kick
+[v1l0.9] x9               # Amen Syncopated Snare Hit!
+[v0l0.8 v4n29l1] x10      # Kick + Sub F1
+[v2l0.4] x11
+[v1l1] x12                # Beat 4 Snare Backbeat
+[v2l0.4] x13
+[v1l0.3 v3l0.8] x14       # Ghost Snare + Open Hat Accent
+[v1l0.9 z*4] x15          # 4-Trigger Amen Snare Roll Fill!
+
+# Start Pattern
+Z1

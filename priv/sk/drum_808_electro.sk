@@ -1,0 +1,44 @@
+# 2028.sk: TR-808 Electro-Funk & Rimshot Bounce 16-Step Groove
+# -------------------------------------------------------------
+M 125
+
+# Wave Slots:
+# 100: Kick (808 Boom)
+# 101: Snare
+# 102: Closed Hi-Hat
+# 103: Rimshot
+# 104: Electro Bass Synth
+[sk/drums-kick.ks]/ks 1 k>d d>r /r100
+[sk/drums-snare.ks]/ks 1 k>d d>r /r101
+[sk/drums-chh.ks]/ks 1 k>d d>r /r102
+[sk/drums-rim.ks]/ks 1 k>d d>r /r103
+[sk/gm-bass-chase.ks]/ks 1 k>d d>r /r104
+
+# Voice Assignments:
+v0 w100 f440 a10          # Kick (Natural unpitched playback)
+v1 w101 f440 a8           # Snare
+v2 w102 f440 a3           # Closed Hat
+v3 w103 f440 a6           # Rimshot
+v4 w104 f440 a6           # Electro Bass (Pitched via note numbers)
+
+# 16-Step Pattern (Full 4/4 Bar @ 125 BPM)
+y0
+[v0l1 v4n36l1] x0
+[v3l0.8] x1               # 808 Rimshot Syncopation
+[v2l0.4] x2
+[v0l0.8 v4n39l0.6] x3     # Syncopated Kick
+[v1l1 v4n36l1] x4         # Beat 2 Snare Backbeat
+[v2l0.4] x5
+[v0l0.7] x6
+[v3l0.8 v4n48l0.6] x7     # Rimshot Syncopation
+[v0l1 v4n36l1] x8         # Beat 3 Kick
+[v3l0.8] x9
+[v0l0.9 v4n41l0.6] x10
+[v2l0.4] x11
+[v1l1 v4n36l1] x12        # Beat 4 Snare Backbeat
+[v2l0.4] x13
+[v0l0.8 v4n43l0.6] x14
+[v1l0.8 z*3] x15          # Triplet Snare Ratchet Fill
+
+# Start Pattern
+Z1

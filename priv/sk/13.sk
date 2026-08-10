@@ -1,0 +1,23 @@
+S100
+Z0
+M120
+[sk/drums-snare.ks] /ks k>d d>r /r 300
+[sk/drums-kick.ks] /ks k>d d>r /r 301
+# /w13,300 # snare
+# /w16,301 # kick
+v10 w300 a20
+v11 w301 a20
+
+v0 w4 f110 a4 p0 c1,0.13182 F1,10.0 l1
+v1 w0 f1 a10 p0 m1 l1
+
+v10 f440 J1 K7524.19 Q2.2435 A13,5
+v11 f440 J0 K250 Q0.0902
+v13 f30 a.25 J1 m1 l1
+
+y0 %4
+
+[v11 l1] x0
+[v10 l1] x1
+
+Z1

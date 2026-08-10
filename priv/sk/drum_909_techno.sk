@@ -1,0 +1,44 @@
+# 2027.sk: TR-909 Peak-Time House & Techno 16-Step Groove
+# -----------------------------------------------------------
+M 130
+
+# Wave Slots:
+# 100: Kick (909 Punch)
+# 101: Snare (909 Snare)
+# 102: Closed Hi-Hat
+# 103: Open Hi-Hat
+# 104: 303 Acid Bass
+[sk/drums-kick.ks]/ks 1 k>d d>r /r100
+[sk/drums-snare.ks]/ks 1 k>d d>r /r101
+[sk/drums-chh.ks]/ks 1 k>d d>r /r102
+[sk/drums-ohh.ks]/ks 1 k>d d>r /r103
+[sk/nap-bass-acid.ks]/ks 1 k>d d>r /r104
+
+# Voice Assignments (Drums at natural unpitched f440):
+v0 w100 f440 a10          # Kick (Natural unpitched playback)
+v1 w101 f440 a8           # Snare
+v2 w102 f440 a3           # Closed Hat
+v3 w103 f440 a5           # Open Hat
+v4 w104 f440 a6           # 303 Acid Synth (Pitched via note numbers)
+
+# 16-Step Pattern (Full 4/4 Bar @ 130 BPM)
+y0
+[v0l1 v4n36l1] x0
+[v2l0.4] x1
+[v3l0.8] x2               # Offbeat Open Hat
+[v2l0.4 v4n48l0.6] x3
+[v0l1 v1l1] x4            # Snare Backbeat
+[v2l0.4] x5
+[v3l0.8 v4n41l0.6] x6     # Offbeat Open Hat
+[v2l0.4] x7
+[v0l1 v4n36l1] x8
+[v2l0.4] x9
+[v3l0.8 v4n43l0.6] x10    # Offbeat Open Hat
+[v2l0.4] x11
+[v0l1 v1l1] x12           # Snare Backbeat
+[v2l0.4] x13
+[v1l0.35 v3l0.8] x14      # Ghost Snare + Open Hat Accent
+[v1l0.8 z*4] x15          # 32nd-Note Snare Ratchet Fill into Beat 1
+
+# Start Pattern
+Z1

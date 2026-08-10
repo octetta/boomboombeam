@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION="0.55.20"
+VERSION="0.55.24"
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
 
@@ -50,4 +50,24 @@ else
 fi
 rm "$ASSET"
 
-echo "Pulp downloaded and extracted to ${EXTRACT_DIR}!"
+echo "Pulp native libraries downloaded and extracted to ${EXTRACT_DIR}!"
+
+# Download WASM Build
+WASM_ASSET="skred-${VERSION}-maxed-wasm.zip"
+WASM_URL="https://github.com/octetta/pulp/releases/download/v${VERSION}/${WASM_ASSET}"
+WASM_EXTRACT_DIR="priv/static/assets/skred"
+
+echo "Downloading WASM build..."
+mkdir -p "$WASM_EXTRACT_DIR"
+curl -fLO "$WASM_URL" || { echo "Failed to download $WASM_URL"; exit 1; }
+
+echo "Extracting ${WASM_ASSET}..."
+unzip -q -o "$WASM_ASSET" -d "$WASM_EXTRACT_DIR"
+SUBDIR=$(find "$WASM_EXTRACT_DIR" -mindepth 1 -maxdepth 1 -type d | head -n 1)
+if [ -n "$SUBDIR" ]; then
+    mv "$SUBDIR"/* "$WASM_EXTRACT_DIR/"
+    rm -rf "$SUBDIR"
+fi
+rm "$WASM_ASSET"
+
+echo "WASM build extracted to ${WASM_EXTRACT_DIR}!"

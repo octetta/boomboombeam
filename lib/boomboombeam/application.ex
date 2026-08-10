@@ -11,7 +11,9 @@ defmodule BoomBoomBeam.Application do
       BoomBoomBeamWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:boomboombeam, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: BoomBoomBeam.PubSub},
-      BoomBoomBeam.AudioPort,
+      BoomBoomBeam.AudioEngine.State,
+      BoomBoomBeam.AudioEngine.Port,
+      BoomBoomBeam.AudioEngine.Udp,
       # Start to serve requests, typically the last entry
       BoomBoomBeamWeb.Endpoint
     ]

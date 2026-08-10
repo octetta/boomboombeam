@@ -1,0 +1,16 @@
+Z0
+S100
+
+M80
+
+[sk/drums-kick.ks] /ks k>d d>r /r 208
+[sk/drums-snare.ks] /ks k>d d>r /r 205
+
+v0 w208 f440 h.82 a20  # bass
+v1 w205 f440 h.58 a20     # snare
+
+y0 %4            # select pattern 0
+[v0T +.125 v0T] x0   # store to step 0
+[v1T +.025 v1T] x1 # store to step 1
+
+Z1

@@ -1,4 +1,4 @@
-defmodule BoomBoomBeam.AudioPort do
+defmodule BoomBoomBeam.AudioEngine.Port do
   use GenServer
 
   require Logger
@@ -6,31 +6,23 @@ defmodule BoomBoomBeam.AudioPort do
   @pubsub BoomBoomBeam.PubSub
   @topic "skred_repl"
 
+  @behaviour BoomBoomBeam.AudioEngine
+
   # Client API
 
   def start_link(_opts) do
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
+  @impl BoomBoomBeam.AudioEngine
   def command(cmd_string, opts \\ []) do
     silent = Keyword.get(opts, :silent, false)
     GenServer.cast(__MODULE__, {:command, cmd_string, silent})
   end
 
-  def restart() do
-    GenServer.cast(__MODULE__, :restart)
-  end
-
-  def set_volume(voice, volume) do
-    command("v#{voice} a#{volume}")
-  end
-
-  def set_pitch(voice, pitch) do
-    command("v#{voice} f#{pitch}")
-  end
-
-  def send_trigger(voice) do
-    command("v#{voice} t1")
+  @impl BoomBoomBeam.AudioEngine
+  def restart(opts \\ []) do
+    GenServer.cast(__MODULE__, {:restart, opts})
   end
 
   # Server Callbacks
@@ -59,11 +51,15 @@ defmodule BoomBoomBeam.AudioPort do
       Path.join(File.cwd!(), filename)
     end
     
+    # Set CWD to priv so that ./sk and ./wav are available directly
+    priv_dir = Application.app_dir(:boomboombeam, "priv")
+
     port = Port.open({:spawn_executable, executable}, [
       :binary,
-      :stream,
+      {:line, 8192},
       :use_stdio,
-      :exit_status
+      :exit_status,
+      {:cd, priv_dir}
     ])
     
     Logger.info("Started Skred audio port (port: #{inspect(port)})")
@@ -85,20 +81,27 @@ defmodule BoomBoomBeam.AudioPort do
   end
 
   @impl true
-  def handle_cast(:restart, state) do
-    Logger.info("Restarting Skred audio port...")
+  def handle_cast({:restart, opts}, state) do
+    Logger.info("Restarting Skred audio port with opts: #{inspect(opts)}")
     Phoenix.PubSub.broadcast(@pubsub, @topic, {:skred_status, :restarting})
     # Close the current port
     Port.close(state.port)
-    # Open a new one
+    # Open a new one (opts could be passed here later)
     new_port = open_port()
     {:noreply, %{state | port: new_port}}
   end
 
   @impl true
-  def handle_info({port, {:data, data}}, %{port: port} = state) do
+  def handle_info({port, {:data, {:eol, line}}}, %{port: port} = state) do
     # Broadcast output back to any subscribers (like the REPL UI)
-    Phoenix.PubSub.broadcast(@pubsub, @topic, {:skred_data, data})
+    Phoenix.PubSub.broadcast(@pubsub, @topic, {:skred_data, line <> "\n"})
+    {:noreply, state}
+  end
+
+  @impl true
+  def handle_info({port, {:data, {:noeol, line}}}, %{port: port} = state) do
+    # Broadcast output back to any subscribers
+    Phoenix.PubSub.broadcast(@pubsub, @topic, {:skred_data, line})
     {:noreply, state}
   end
 
