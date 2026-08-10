@@ -12,6 +12,11 @@ To develop or build this project, you need:
 
 In development, the Elixir backend will look for the `skred_port` binary in your local root directory. 
 
+Before building the audio engine, you must download the pre-compiled `pulp` C library (which contains the core signal processing algorithms) for your platform:
+```bash
+./download-pulp.sh
+```
+
 1. **Build the Audio Engine**:
    ```bash
    cd native/skred_port
