@@ -69,6 +69,8 @@ defmodule BoomBoomBeam.AudioEngine.Udp do
     Logger.info("Sending restart signal over UDP with opts: #{inspect(opts)}")
     Phoenix.PubSub.broadcast(@pubsub, @topic, {:skred_status, :restarting})
     
+    # Send -restart to restart the engine internally if it supports it
+    :gen_udp.send(state.socket, state.remote_ip, state.remote_port, "-restart\n")
     # Send log1 again in case the remote server was just restarted
     :gen_udp.send(state.socket, state.remote_ip, state.remote_port, "log1\n")
     

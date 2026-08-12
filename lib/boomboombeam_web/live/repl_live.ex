@@ -388,7 +388,7 @@ defmodule BoomBoomBeamWeb.ReplLive do
                   <.form for={@dl_form} phx-change="update_dl" class="grid grid-cols-2 gap-x-4 gap-y-6">
                     <div class="space-y-1.5 group/slider">
                       <div class="flex justify-between items-end">
-                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Param 1</label>
+                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Delay Time Coarse</label>
                         <span class="text-[10px] text-blue-600 dark:text-blue-400 font-mono">{@dl_form[:s1].value}</span>
                       </div>
                       <input type="range" name="s1" value={@dl_form[:s1].value} min="0" max="7" class="w-full h-1.5 bg-slate-300 dark:bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500 hover:accent-blue-500 dark:hover:accent-blue-400 transition-all" />
@@ -396,7 +396,7 @@ defmodule BoomBoomBeamWeb.ReplLive do
                     
                     <div class="space-y-1.5 group/slider">
                       <div class="flex justify-between items-end">
-                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Param 2</label>
+                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Delay Time Fine</label>
                         <span class="text-[10px] text-blue-600 dark:text-blue-400 font-mono">{@dl_form[:s2].value}</span>
                       </div>
                       <input type="range" name="s2" value={@dl_form[:s2].value} min="0" max="15" class="w-full h-1.5 bg-slate-300 dark:bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500 hover:accent-blue-500 dark:hover:accent-blue-400 transition-all" />
@@ -404,7 +404,7 @@ defmodule BoomBoomBeamWeb.ReplLive do
                     
                     <div class="space-y-1.5 group/slider">
                       <div class="flex justify-between items-end">
-                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Param 3</label>
+                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Feedback</label>
                         <span class="text-[10px] text-blue-600 dark:text-blue-400 font-mono">{@dl_form[:s3].value}</span>
                       </div>
                       <input type="range" name="s3" value={@dl_form[:s3].value} min="0" max="15" class="w-full h-1.5 bg-slate-300 dark:bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500 hover:accent-blue-500 dark:hover:accent-blue-400 transition-all" />
@@ -412,7 +412,7 @@ defmodule BoomBoomBeamWeb.ReplLive do
                     
                     <div class="space-y-1.5 group/slider">
                       <div class="flex justify-between items-end">
-                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Param 4</label>
+                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Mod Rate</label>
                         <span class="text-[10px] text-blue-600 dark:text-blue-400 font-mono">{@dl_form[:s4].value}</span>
                       </div>
                       <input type="range" name="s4" value={@dl_form[:s4].value} min="0" max="31" class="w-full h-1.5 bg-slate-300 dark:bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500 hover:accent-blue-500 dark:hover:accent-blue-400 transition-all" />
@@ -420,7 +420,7 @@ defmodule BoomBoomBeamWeb.ReplLive do
                     
                     <div class="space-y-1.5 group/slider">
                       <div class="flex justify-between items-end">
-                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Param 5</label>
+                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Mod Depth</label>
                         <span class="text-[10px] text-blue-600 dark:text-blue-400 font-mono">{@dl_form[:s5].value}</span>
                       </div>
                       <input type="range" name="s5" value={@dl_form[:s5].value} min="0" max="31" class="w-full h-1.5 bg-slate-300 dark:bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500 hover:accent-blue-500 dark:hover:accent-blue-400 transition-all" />
@@ -428,7 +428,7 @@ defmodule BoomBoomBeamWeb.ReplLive do
                     
                     <div class="space-y-1.5 group/slider">
                       <div class="flex justify-between items-end">
-                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Param 6</label>
+                        <label class="text-[11px] font-medium text-slate-500 dark:text-gray-400 group-hover/slider:text-slate-800 dark:group-hover/slider:text-gray-200 transition-colors">Dry / Wet</label>
                         <span class="text-[10px] text-blue-600 dark:text-blue-400 font-mono">{@dl_form[:s6].value}</span>
                       </div>
                       <input type="range" name="s6" value={@dl_form[:s6].value} min="0" max="15" class="w-full h-1.5 bg-slate-300 dark:bg-gray-800 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500 hover:accent-blue-500 dark:hover:accent-blue-400 transition-all" />
